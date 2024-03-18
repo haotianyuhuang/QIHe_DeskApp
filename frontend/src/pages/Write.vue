@@ -1,7 +1,11 @@
 <template>
     <div>
-        <div class="page" :style="{ width: `${props.size.w * 0.7}px`, height: `${props.size.h * 0.85}px` }">
-            <div class="chapter_title"><input type="text" placeholder="请输入章节名"></div>
+        <div class="page"
+            :style="{ width: `${props.size.w * 0.7}px`, height: `${props.size.h * 0.85}px`, fontSize: `${props.size.fontSize}px` }"
+            v-if="store.MenuShow" @animationend="waitAnime">
+            <div class="chapter_title">
+                <input type="text" placeholder="请输入章节名" :style="{ fontSize: `${props.size.fontSize}px` }">
+            </div>
             <hr>
             <div class="content-box">
                 <div class="content" contenteditable="true" @keyup="initContent" ref="insertText" spellcheck="false"
@@ -10,24 +14,22 @@
                 </div>
             </div>
         </div>
-        <div>{{ countWord }}</div>
+        <div v-if="animend">{{ countWord }}</div>
     </div>
 </template>
 <script setup lang="ts">
 import { Size } from "../../wailsjs/runtime/runtime";
 import { StyleCss } from "../types/wirte";
 import { reactive, defineProps, ref, onMounted } from "vue";
-const props = defineProps<{
-    size: {
-        w: number,
-        h: number
-    }
-}>()
+import { MainStore } from "../store/MainStore";
+const store = MainStore()
+const props = defineProps<{ size: { w: number, h: number, fontSize: number } }>()
 
 const paragraphList = ref<string[]>([]);
 const sel = document.getSelection();
 const insertText = ref<HTMLElement>();
 const countWord = ref(0);
+const animend = ref(false)
 let isComposing = false;
 
 onMounted(() => {
@@ -47,6 +49,10 @@ onMounted(() => {
     });
 
 })
+
+const waitAnime = () => {
+    animend.value = true
+}
 
 const getPasteContent = (e: ClipboardEvent) => {
     const data = e.clipboardData;
@@ -98,36 +104,46 @@ p {
 .page {
     margin: 20px auto 0;
     background: #fff;
+    transform-origin: top;
+    animation: toTop 1s ease-in-out;
+    padding: 2em;
+}
+
+hr {
+    margin: 0 auto 10px;
 }
 
 .chapter_title {
     width: 100%;
 
     input {
-        text-indent: 2em;
-        margin-top: 8px;
-        font-size: 18px;
-        text-align: left;
+        margin: 8px 0;
+        text-align: center;
         outline: none;
         padding: 0;
         border: 0;
         width: inherit;
+        font-weight: bold;
     }
 }
 
-.content-box {
-    width: inherit;
-    height: inherit;
-}
-
 .content {
-    height: 100%;
     color: #000;
     border: none;
     outline: none;
-    font-size: 18px;
     text-indent: 2em;
     text-align: left;
     overflow-y: scroll;
+}
+
+@keyframes toTop {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 </style>

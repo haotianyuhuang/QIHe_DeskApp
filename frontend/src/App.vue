@@ -6,7 +6,10 @@ import TitleMenu from "./components/TitleMenu.vue";
 import Write from "./pages/Write.vue";
 let size = ref({ w: 1024, h: 768 });
 window.addEventListener("resize", () => {
-  WindowGetSize().then(res => { size.value = res })
+  WindowGetSize().then(res => {
+    res.w > 1024 ? Object.assign(res, { fontSize: 28 }) : Object.assign(res, { fontSize: 18 })
+    size.value = res;
+  })
 })
 </script>
 

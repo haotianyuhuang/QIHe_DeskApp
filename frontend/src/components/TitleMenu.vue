@@ -1,11 +1,25 @@
 <template>
-	<div class="menu" v-if="MenuShow"></div>
+	<div class="menu"></div>
 </template>
 <script setup>
+import { MainStore } from "../store/MainStore";
+const store = MainStore()
 </script>
 <style scoped>
 .menu {
 	height: 30px;
 	background: #e93030;
+}
+
+@keyframes toTop {
+	0% {
+		transform: translateY(-30px) rotateY(45deg);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
 }
 </style>
