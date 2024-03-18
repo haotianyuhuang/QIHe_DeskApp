@@ -1,9 +1,11 @@
 <template>
     <div>
-        <div class="page">
+        <div class="page" :style="{ width: `${props.size.w * 0.7}px`, height: `${props.size.h * 0.85}px` }">
+            <div class="chapter_title"><input type="text" placeholder="请输入章节名"></div>
+            <hr>
             <div class="content-box">
-                <div class="content" contenteditable="true" @keyup="initContent" @mouseup="addNote" ref="insertText"
-                    spellcheck="false" @paste="getPasteContent">
+                <div class="content" contenteditable="true" @keyup="initContent" ref="insertText" spellcheck="false"
+                    @paste="getPasteContent">
                     <p><br></p>
                 </div>
             </div>
@@ -12,9 +14,16 @@
     </div>
 </template>
 <script setup lang="ts">
+import { Size } from "../../wailsjs/runtime/runtime";
 import { StyleCss } from "../types/wirte";
 import { reactive, defineProps, ref, onMounted } from "vue";
-document.title = "写作";
+const props = defineProps<{
+    size: {
+        w: number,
+        h: number
+    }
+}>()
+
 const paragraphList = ref<string[]>([]);
 const sel = document.getSelection();
 const insertText = ref<HTMLElement>();
@@ -65,8 +74,6 @@ const initContent = (e: KeyboardEvent) => {
         if (en !== null) {
             en_words = en.length;
         }
-        console.log(isComposing);
-
         countWord.value = en_words + zh_words;
     }
 }
@@ -88,21 +95,29 @@ p {
     margin: 0 0 10px;
 }
 
-.note {
-    background: rgb(102, 255, 0);
+.page {
+    margin: 20px auto 0;
+    background: #fff;
 }
 
-.page {
-    width: 800px;
-    height: 600px;
-    margin: auto;
-    background: #fff;
+.chapter_title {
+    width: 100%;
+
+    input {
+        text-indent: 2em;
+        margin-top: 8px;
+        font-size: 18px;
+        text-align: left;
+        outline: none;
+        padding: 0;
+        border: 0;
+        width: inherit;
+    }
 }
 
 .content-box {
     width: inherit;
     height: inherit;
-    padding: 18px;
 }
 
 .content {
