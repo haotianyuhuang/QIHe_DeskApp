@@ -118,7 +118,6 @@ hr {
 
     input {
         margin: 8px 0;
-        text-align: center;
         outline: none;
         padding: 0;
         border: 0;
