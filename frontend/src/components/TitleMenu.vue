@@ -1,5 +1,8 @@
 <template>
-	<div class="menu"></div>
+	<div class="menu">
+		<router-link to="/">首页</router-link>
+		<router-link to="/write">写作</router-link>
+	</div>
 </template>
 <script setup>
 import { MainStore } from "../store/MainStore";

@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="page"
-            :style="{ width: `${props.size.w * 0.7}px`, height: `${props.size.h * 0.85}px`, fontSize: `${props.size.fontSize}px` }"
+            :style="{ width: `${store.Size.w * 0.7}px`, height: `${store.Size.h * 0.85}px`, fontSize: `${store.Size.fontSize}px` }"
             v-if="store.MenuShow" @animationend="waitAnime">
             <div class="chapter_title">
-                <input type="text" placeholder="请输入章节名" :style="{ fontSize: `${props.size.fontSize}px` }">
+                <input type="text" placeholder="请输入章节名" :style="{ fontSize: `${store.Size.fontSize}px` }">
             </div>
             <hr>
             <div class="content-box">
@@ -22,9 +22,8 @@ import { Size } from "../../wailsjs/runtime/runtime";
 import { StyleCss } from "../types/wirte";
 import { reactive, defineProps, ref, onMounted } from "vue";
 import { MainStore } from "../store/MainStore";
-const store = MainStore()
-const props = defineProps<{ size: { w: number, h: number, fontSize: number } }>()
 
+const store = MainStore();
 const paragraphList = ref<string[]>([]);
 const sel = document.getSelection();
 const insertText = ref<HTMLElement>();

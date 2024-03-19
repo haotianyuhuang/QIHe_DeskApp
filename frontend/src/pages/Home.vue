@@ -1,5 +1,5 @@
 <script setup>
-import {reactive} from 'vue'
+import { reactive } from 'vue'
 
 const data = reactive({
   name: "",
@@ -7,7 +7,7 @@ const data = reactive({
 })
 
 function greet() {
-  
+
 }
 
 </script>
@@ -16,7 +16,7 @@ function greet() {
   <main>
     <div id="result" class="result">{{ data.resultText }}</div>
     <div id="input" class="input-box">
-      <input id="name" v-model="data.name" autocomplete="off" class="input" type="text"/>
+      <input id="name" v-model="data.name" autocomplete="off" class="input" type="text" />
       <button class="btn" @click="greet">Greet</button>
     </div>
   </main>
