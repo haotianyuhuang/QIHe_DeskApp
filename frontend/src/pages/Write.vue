@@ -18,8 +18,6 @@
     </div>
 </template>
 <script setup lang="ts">
-import { Size } from "../../wailsjs/runtime/runtime";
-import { StyleCss } from "../types/wirte";
 import { reactive, defineProps, ref, onMounted } from "vue";
 import { MainStore } from "../store/MainStore";
 const store = MainStore();
