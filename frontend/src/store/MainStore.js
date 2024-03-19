@@ -7,6 +7,10 @@ export const MainStore = defineStore("main", {
             w: 1024,
             h: 768,
             fontSize: 18
+        },
+        Side: {
+            minWidth: 50,
+            maxWidth: 150
         }
     })
 })

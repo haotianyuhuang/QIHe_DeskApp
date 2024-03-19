@@ -2,19 +2,19 @@
     <div>
         <div class="page"
             :style="{ width: `${store.Size.w * 0.7}px`, height: `${store.Size.h * 0.85}px`, fontSize: `${store.Size.fontSize}px` }"
-            v-if="store.MenuShow" @animationend="waitAnime">
+            v-if="store.MenuShow">
             <div class="chapter_title">
                 <input type="text" placeholder="请输入章节名" :style="{ fontSize: `${store.Size.fontSize}px` }">
             </div>
             <hr>
             <div class="content-box">
                 <div class="content" contenteditable="true" @keyup="initContent" ref="insertText" spellcheck="false"
-                    @paste="getPasteContent">
+                    @paste="getPasteContent" :style="{ height: `calc(${store.Size.h * 0.85}px - 60px)` }">
                     <p><br></p>
                 </div>
             </div>
         </div>
-        <div v-if="animend">{{ countWord }}</div>
+        <div>{{ countWord }}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -22,15 +22,12 @@ import { Size } from "../../wailsjs/runtime/runtime";
 import { StyleCss } from "../types/wirte";
 import { reactive, defineProps, ref, onMounted } from "vue";
 import { MainStore } from "../store/MainStore";
-
 const store = MainStore();
 const paragraphList = ref<string[]>([]);
 const sel = document.getSelection();
 const insertText = ref<HTMLElement>();
 const countWord = ref(0);
-const animend = ref(false)
 let isComposing = false;
-
 onMounted(() => {
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState == "visible") {
@@ -101,11 +98,10 @@ p {
 }
 
 .page {
-    margin: 20px auto 0;
+    margin: auto;
     background: #fff;
     transform-origin: top;
-    animation: toTop 1s ease-in-out;
-    padding: 2em;
+    padding: 0 2em;
 }
 
 hr {
@@ -132,16 +128,5 @@ hr {
     text-indent: 2em;
     text-align: left;
     overflow-y: scroll;
-}
-
-@keyframes toTop {
-    0% {
-        height: 0;
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }
 </style>

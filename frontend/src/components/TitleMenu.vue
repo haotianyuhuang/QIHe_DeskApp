@@ -1,28 +1,26 @@
 <template>
 	<div class="menu">
-		<router-link to="/">首页</router-link>
-		<router-link to="/write">写作</router-link>
+		<router-link v-for="(item, index) in menuList" :to="item.path" class="menuIndex"
+			:style="{ fontSize: `${MainStore().Size.fontSize}px`, width: (MainStore().Size.w > 1024 ? `${MainStore().Side.maxWidth}px` : `${MainStore().Side.minWidth}px`) }">
+			<i>图标</i>
+			<i v-if="MainStore().Size.w > 1024">{{ item.title }}</i>
+		</router-link>
 	</div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { MainStore } from "../store/MainStore";
-const store = MainStore()
+const menuList = [{ title: "首页", path: "/", fonticon: "" }, { title: "写作", path: "/write", fonticon: "" }]
 </script>
 <style scoped>
 .menu {
-	height: 30px;
-	background: #e93030;
-}
+	height: 100vh;
+	background: #ee6363;
+	display: flex;
+	flex-direction: column;
 
-@keyframes toTop {
-	0% {
-		transform: translateY(-30px) rotateY(45deg);
-		opacity: 0;
-	}
-
-	100% {
-		transform: translateY(0);
-		opacity: 1;
+	.menuIndex {
+		text-decoration: none;
+		color: #111111;
 	}
 }
 </style>
